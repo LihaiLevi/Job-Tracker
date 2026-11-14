@@ -1,0 +1,34 @@
+name: job-tracker
+# Optional cloud schedule (disabled unless you push to GitHub and enable Actions).
+# Primary setup for this repo is local Windows Task Scheduler (see register_task.ps1).
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 */2 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  track:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Run tracker
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          JOOBLE_API_KEY: ${{ secrets.JOOBLE_API_KEY }}
+        run: python -m src.main
+      - name: Persist seen-jobs DB & dashboard
+        run: |
+          git config user.name "job-tracker-bot"
+          git config user.email "job-tracker-bot@users.noreply.github.com"
+          git add -f data/jobs.db docs/index.html
+          git diff --staged --quiet || git commit -m "chore: update jobs db and dashboard"
+          git push

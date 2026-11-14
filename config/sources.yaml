@@ -1,0 +1,231 @@
+# Verified job sources. Add a company by adding an entry here - no code changes needed.
+#
+# Supported `ats` values:
+#   greenhouse : requires `board`
+#   lever      : requires `board` (optional `region: eu` for api.eu.lever.co)
+#   ashby      : requires `board`
+#   comeet     : requires `uid` and `token` (public Careers API credentials from the company's careers page)
+#   aggregator : Jooble Israel API (`JOOBLE_API_KEY` env var); disabled by default
+#
+# Every entry below was verified live against its official public JSON endpoint.
+
+sources:
+  # ------------------------------------------------------------------ Apple & Workday (Israel R&D)
+  - name: Apple Israel
+    ats: apple
+    location: israel-ISR
+    queries: [embedded, firmware, real-time, C++, Linux kernel, driver, BSP]
+
+  - name: NVIDIA Israel
+    ats: workday
+    host: nvidia.wd5.myworkdayjobs.com
+    tenant: nvidia
+    site: NVIDIAExternalCareerSite
+    queries: [embedded Israel, firmware Israel, RTOS Israel, real-time Israel, Linux kernel Israel, driver Israel, Yokneam]
+
+  - name: Intel Israel
+    ats: workday
+    host: intel.wd1.myworkdayjobs.com
+    tenant: intel
+    site: External
+    queries: [embedded Israel, firmware Israel, RTOS Israel, real-time Israel, Linux kernel Israel]
+
+  - name: Cisco Israel
+    ats: workday
+    host: cisco.wd5.myworkdayjobs.com
+    tenant: cisco
+    site: Cisco_Careers
+    queries: [embedded Israel, firmware Israel, C++ Israel, Silicon One Israel]
+
+  # ------------------------------------------------------------------ Lever
+  - name: Mobileye
+    ats: lever
+    region: eu
+    board: mobileye
+
+  - name: Bright Machines
+    ats: lever
+    board: brightmachines
+
+  # ------------------------------------------------------------------ Ashby
+  - name: Wayve
+    ats: ashby
+    board: wayve
+
+  - name: Arago
+    ats: ashby
+    board: arago
+
+  # ------------------------------------------------------------------ Greenhouse
+  - name: Augury
+    ats: greenhouse
+    board: augury
+
+  - name: Cato Networks
+    ats: greenhouse
+    board: catonetworks
+
+  - name: Astera Labs
+    ats: greenhouse
+    board: asteralabs
+
+  # ------------------------------------------------------------------ Comeet (Israeli embedded / defense / silicon / robotics / comms)
+  - name: Aitech Systems
+    ats: comeet
+    uid: "88.004"
+    token: "88433183B9C110844204CA43318033180"
+  - name: Regulus Cyber
+    ats: comeet
+    uid: "9A.00D"
+    token: "A9D4A4B35114A4B54E835114A4BA9D153AA9D"
+
+  - name: XTEND
+    ats: comeet
+    uid: "85.00A"
+    token: "58A1BB22C50B14213C162858A213C26C61628"
+
+  - name: Airobotics
+    ats: comeet
+    uid: "AA.005"
+    token: "AA54A8335395FCD5FCD01FEF1FEF2A94154A"
+
+  - name: Skana Robotics
+    ats: comeet
+    uid: "5B.007"
+    token: "B574F615AB84F61B57440A440A04F61440A"
+
+  - name: Kela Technologies
+    ats: comeet
+    uid: "2A.007"
+    token: "A2747111E755B5F0513847114711A274711"
+
+  - name: Arbe Robotics
+    ats: comeet
+    uid: "C6.001"
+    token: "6C12886D821B0414432886144328862F472F47"
+
+  - name: Innoviz Technologies
+    ats: comeet
+    uid: "52.004"
+    token: "25495012A0104C012A0104C6FCBA40"
+
+  - name: Ceva
+    ats: comeet
+    uid: "76.005"
+    token: "67526BE6752D332D33026BE135F033A8"
+
+  - name: NextSilicon
+    ats: comeet
+    uid: "18.007"
+    token: "817308A2873102E1845308A308A40B8308A205C"
+
+  - name: Xsight Labs
+    ats: comeet
+    uid: "46.00C"
+    token: "64C25C864C12E41930326064C25C801930"
+
+  - name: proteanTecs
+    ats: comeet
+    uid: "D5.00E"
+    token: "5DE23340029121D562912029122334"
+
+  - name: Samsung Israel (SIRC)
+    ats: comeet
+    uid: "D4.005"
+    token: "4D518291CFE13540135413544D518291CFE"
+
+  - name: Wiliot
+    ats: comeet
+    uid: "F6.003"
+    token: "6F329B2DE6379829B229B2037983E8B3E8B"
+
+  - name: Quantum Machines
+    ats: comeet
+    uid: "D6.000"
+    token: "6D028E0DA022106D01470221036803D502210"
+
+  - name: TriEye
+    ats: comeet
+    uid: "A6.00E"
+    token: "6AE2814D5CD5C1AB8140A35706AE2EC22814"
+
+  - name: Lumus
+    ats: comeet
+    uid: "62.00F"
+    token: "26F9BC15E726F74D110915E74DE4DEE9A"
+
+  - name: Imagry
+    ats: comeet
+    uid: "B7.00F"
+    token: "7BF2E7A1EFC1EFCF7E7BF36393DF826BB2E7A"
+
+  - name: Foretellix
+    ats: comeet
+    uid: "84.007"
+    token: "48716A316A31FB101FB116A3D951FB11B2A"
+
+  - name: Percepto
+    ats: comeet
+    uid: "44.000"
+    token: "440154015404400088019802640880"
+
+  - name: NeuReality
+    ats: comeet
+    uid: "89.002"
+    token: "982428E9820428E390C55924C101C861C86"
+
+  - name: DriveNets
+    ats: comeet
+    uid: "72.006"
+    token: "2769D81626762C4E762762C4EC4E1626"
+
+  - name: Ceragon Networks
+    ats: comeet
+    uid: "D3.003"
+    token: "3D3131FF4C01AC57A61AC51E98131FF4C"
+
+  - name: Gilat Satellite Networks
+    ats: comeet
+    uid: "39.005"
+    token: "935373E52DD52DD126A373E49A8935373E935"
+
+  - name: AudioCodes
+    ats: comeet
+    uid: "85.004"
+    token: "5841B942C2058431A4108C269C108C0108C"
+
+  - name: Allot
+    ats: comeet
+    uid: "C4.009"
+    token: "4C917ED1CB699217ED04C92B11217F2B11"
+
+  - name: Upstream Security
+    ats: comeet
+    uid: "E4.003"
+    token: "4E3186F1D521D522235138C1D521D52EA9186F"
+
+  - name: Paragon
+    ats: comeet
+    uid: "76.006"
+    token: "67626C46762D3A33B02D3A204E26C4676676"
+
+  - name: abra R&D
+    ats: comeet
+    uid: "15.007"
+    token: "517197323A1A2E1973A2E145CA2E0A2E"
+
+  - name: CommIT
+    ats: comeet
+    uid: "76.008"
+    token: "67826D067833C0CF002D48020581368"
+
+  # ------------------------------------------------------------------ Optional Aggregator
+  - name: Jooble Israel
+    ats: aggregator
+    enabled: false          # set JOOBLE_API_KEY env var and flip to true to enable
+    location: Israel
+    queries:
+      - embedded software engineer
+      - firmware engineer
+      - real-time software engineer
+      - RTOS C++

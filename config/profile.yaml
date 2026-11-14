@@ -1,0 +1,346 @@
+# Relevance profile. Everything that decides "is this job for me?" lives here.
+# Keywords are matched case-insensitively as whole words/phrases (Hebrew: substring).
+# Score = title (capped) + skills (capped) + location bonus - penalties.
+
+thresholds:
+  match: 50        # score >= match -> notify
+  borderline: 30   # borderline <= score < match -> ask Gemini (only if GEMINI_API_KEY is set)
+
+# ---------------------------------------------------------------- seniority
+seniority:
+  # Any of these in the TITLE -> reject.
+  reject_title_words:
+    - intern
+    - internship
+    - student
+    - junior
+    - jr
+    - graduate
+    - entry level
+    - entry-level
+    - staff
+    - principal
+    - director
+    - manager
+    - vp
+    - vice president
+    - head of
+    - chief
+    - סטודנט
+    - סטודנטית
+    - מתמחה
+    - ג'וניור
+    - מנהל
+    - מנהלת
+  # Comeet exposes an "experience level" field; reject these values.
+  reject_experience_levels: [internship, entry-level, entry level, director, executive]
+  senior_title_words: [senior, sr, בכיר, בכירה]
+  senior_max_years: 6        # "Senior" accepted only if required years <= this
+  reject_min_years: 8        # any posting requiring >= this many years -> reject
+  senior_unknown_years_penalty: 5   # "Senior" with no years stated: keep, small penalty
+
+# ---------------------------------------------------------------- title
+title:
+  cap: 50
+  keywords:                  # weight added when the phrase appears in the title
+    embedded: 35
+    firmware: 35
+    fw: 35
+    real-time: 30
+    real time: 30
+    real - time: 30
+    realtime: 30
+    rtos: 30
+    bsp: 28
+    avionics: 35
+    flight software: 35
+    flight control: 30
+    ardupilot: 30
+    px4: 30
+    embedded linux: 10       # on top of "embedded"
+    linux kernel: 25
+    linux: 20
+    yocto: 25
+    u-boot: 25
+    bootloader: 25
+    kernel: 20
+    driver: 22
+    drivers: 22
+    hal: 22
+    board bring-up: 25
+    bring-up: 22
+    bringup: 22
+    low-level: 25
+    low level: 25
+    c++: 25
+    c/c++: 25
+    (c): 25
+    in c: 25
+    c software: 25
+    c developer: 25
+    c engineer: 25
+    rust: 18
+    systems software: 22
+    system software: 22
+    os team: 20
+    operating system: 20
+    middleware: 18
+    sdk: 15
+    dsp: 22
+    soc software: 28
+    silicon software: 28
+    embedded validation: 25
+    firmware validation: 25
+    firmware verification: 25
+    pcie: 22
+    rdma: 25
+    physical layer: 20
+    data path: 25
+    datapath: 25
+    data-path: 25
+    packet: 22
+    ethernet: 20
+    switch: 18
+    communication software: 25
+    wireless software: 25
+    networking: 18
+    network software: 22
+    robotics: 25
+    robot: 22
+    autonomous: 20
+    autonomy: 20
+    guidance: 25
+    navigation: 22
+    control systems: 22
+    command & control: 25
+    command and control: 25
+    c2: 22
+    c4i: 25
+    tactical: 18
+    base protection: 18
+    counter-drone: 25
+    interception: 20
+    sensor fusion: 22
+    uav: 22
+    uas: 22
+    ugv: 22
+    usv: 22
+    drone: 18
+    משובץ: 35
+    משובצות: 35
+    מערכות משובצות: 35
+    קושחה: 35
+    זמן אמת: 30
+    לינוקס: 20
+    רובוטיקה: 25
+    בקרה: 20
+    ניווט: 20
+    תקשורת: 20
+    שילובים: 18
+    אינטגרציה: 15
+  # Generic titles: small score. A job whose title has ONLY generic words can
+  # at most be "borderline" (Gemini decides), never a direct match.
+  generic_keywords:
+    software engineer: 5
+    software developer: 5
+    sw engineer: 5
+    sw developer: 5
+    r&d engineer: 5
+    system engineer: 5
+    systems engineer: 5
+    validation engineer: 5
+    integration engineer: 5
+    developer: 3
+    מהנדס תוכנה: 5
+    מהנדסת תוכנה: 5
+    מפתח תוכנה: 5
+    מפתחת תוכנה: 5
+    מהנדס מערכת: 5
+    מהנדסת מערכת: 5
+  # Any of these in the title -> reject (not a software role for me).
+  reject_words:
+    - frontend
+    - front-end
+    - front end
+    - full stack
+    - fullstack
+    - full-stack
+    - web
+    - ios
+    - android
+    - mobile
+    - data scientist
+    - data engineer
+    - data analyst
+    - sales
+    - marketing
+    - account
+    - recruiter
+    - talent
+    - product manager
+    - designer
+    - ux
+    - ui
+    - devops
+    - it
+    - helpdesk
+    - finance
+    - legal
+    - mechanical
+    - analog
+    - layout
+    - physical design
+    - asic
+    - rf engineer
+    - technician
+    - customer success
+  # Title words that are not a hard no, but make it less likely.
+  penalty_words:
+    backend: 15
+    back-end: 15
+    cloud: 15
+    machine learning: 10
+    algorithm: 5
+    verification: 10
+    qa: 15
+    test: 10
+    hardware: 10
+    team lead: 10
+    tech lead: 5
+
+# ---------------------------------------------------------------- skills (description)
+skills:
+  cap: 40
+  keywords:
+    c++: 6
+    c/c++: 6
+    embedded c: 6
+    c#: 2
+    python: 2
+    java: 1
+    assembly: 4
+    rtos: 8
+    vxworks: 10
+    uc/os: 8
+    µc/os: 8
+    freertos: 6
+    zephyr: 4
+    embedded linux: 8
+    yocto: 4
+    linux kernel: 5
+    device driver: 6
+    device drivers: 6
+    bsp: 6
+    bare metal: 5
+    bare-metal: 5
+    microcontroller: 4
+    mcu: 3
+    arm: 3
+    cortex: 3
+    real-time: 5
+    real time: 5
+    avionics: 8
+    do-178: 10
+    do-178c: 10
+    uav: 8
+    drone: 5
+    drones: 5
+    ground control: 8
+    mission-critical: 5
+    mission critical: 5
+    safety-critical: 6
+    safety critical: 6
+    tcp/ip: 4
+    udp: 3
+    networking protocols: 3
+    jtag: 3
+    oscilloscope: 2
+    spi: 2
+    i2c: 2
+    uart: 2
+    can bus: 3
+    pcie: 5
+    nvme: 4
+    rdma: 5
+    ethernet: 4
+    dpdk: 6
+    packet processing: 6
+    data path: 5
+    datapath: 5
+    hal: 5
+    bootloader: 6
+    u-boot: 6
+    board bring-up: 6
+    bring-up: 5
+    silicon validation: 6
+    post-silicon: 6
+    pre-silicon: 5
+    soc: 4
+    dsp: 5
+    fpga: 4
+    verilog: 3
+    vhdl: 3
+    ros: 6
+    ros2: 6
+    ardupilot: 8
+    px4: 8
+    mavlink: 8
+    sensor fusion: 5
+    kalman: 4
+    pid: 4
+    control loop: 5
+    multithreading: 4
+    multi-threading: 4
+    multithreaded: 4
+    posix: 5
+    ipc: 4
+    dma: 5
+    interrupt: 4
+    interrupts: 4
+    register: 3
+    registers: 3
+    gdb: 3
+    logic analyzer: 4
+    srs: 2
+    sdd: 2
+    משובצות: 8
+    זמן אמת: 5
+    קושחה: 6
+    לינוקס: 5
+    רובוטיקה: 5
+
+# ---------------------------------------------------------------- location
+location:
+  # Tiers checked in order; first hit wins. Bonus added to score.
+  tiers:
+    - name: tel_aviv
+      bonus: 15
+      places: [tel aviv, herzliya, ramat gan, givatayim, giv'atayim, bnei brak, petah tikva, petah-tikva, holon,
+               bat yam, ramat hasharon, ra'anana, kfar saba, kefar sava, hod hasharon, or yehuda,
+               airport city, rosh haayin, rosh ha'ayin, kiryat ono, yehud,
+               הרצליה, רמת גן, גבעתיים, פתח תקווה, חולון, בת ים, רעננה, כפר סבא,
+               הוד השרון, אור יהודה, ראש העין]
+    - name: center
+      bonus: 8
+      places: [netanya, rehovot, rishon lezion, rishon letsiyon, ness ziona, nes ziona, modi'in, lod,
+               ramla, yavne, shoham, kfar yona, even yehuda, kadima, be'er ya'akov, beer yaakov,
+               נתניה, רחובות, ראשון לציון, נס ציונה, מודיעין, לוד, רמלה, יבנה, שוהם]
+    - name: north
+      bonus: 7
+      places: [haifa, tirat carmel, yokneam, caesarea, hadera, nazareth, migdal haemek, karmiel,
+               tefen, matam, kiryat bialik, tel hai, yizre'el, north,
+               חיפה, יקנעם, קיסריה, חדרה, נצרת, מגדל העמק, כרמיאל, צפון]
+    - name: jerusalem_south
+      bonus: 6
+      places: [jerusalem, beit shemesh, be'er sheva, omer, sderot, kiryat gat,
+               ירושלים, בית שמש, באר שבע]
+  # Only send Telegram alerts for matches in these location tiers (all regions still appear in dashboard).
+  # Set to [] or omit to send Telegram alerts for all matched regions.
+  notify_tiers: [north]
+  # Location mentions Israel but no known city -> this bonus (treated like center).
+  israel_words: [israel, ישראל]
+  israel_generic_bonus: 8
+  # Remote jobs are accepted when open to Israel-based people.
+  remote_words: [remote, מרחוק]
+  remote_ok_regions: [israel, anywhere, worldwide, global, emea]
+  remote_bonus: 10

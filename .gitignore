@@ -1,0 +1,5 @@
+data/http_cache/
+data/tracker.log
+__pycache__/
+*.pyc
+.env
