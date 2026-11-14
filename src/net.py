@@ -13,8 +13,8 @@ from pathlib import Path
 log = logging.getLogger(__name__)
 
 USER_AGENT = "personal-job-tracker/0.1 (personal, non-commercial job alerts)"
-DELAY_SECONDS = 1.5
-TIMEOUT = 30
+DELAY_SECONDS = 0.7
+TIMEOUT = 15
 CACHE_DIR = Path(__file__).resolve().parent.parent / "data" / "http_cache"
 
 _last_request = 0.0

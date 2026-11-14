@@ -3,6 +3,12 @@ name: job-tracker
 # Primary setup for this repo is local Windows Task Scheduler (see register_task.ps1).
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/tracker.yml"
+      - "config/**"
+      - "src/**"
   schedule:
     - cron: "17 */2 * * *"
 
